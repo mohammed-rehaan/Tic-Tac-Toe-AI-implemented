@@ -1,0 +1,241 @@
+print(f"\n\n\tTIC TAC TOE (Implemented using AI)\n\nChoose your side....\nPlayer 1 => X\nPlayer 2 => O")
+player = 'P' + (input("\nEnter player number : "))
+
+board = {
+    'B1': 2,
+    'B2': 2,
+    'B3': 2,
+    'B4': 2,
+    'B5': 2,
+    'B6': 2,
+    'B7': 2,
+    'B8': 2,
+    'B9': 2,
+}
+turn = 1
+
+
+def convert(arg):
+    if arg == 2:
+        return ' '
+    elif arg == 3:
+        return 'X'
+    elif arg == 5:
+        return 'O'
+
+
+def display():
+    print(
+        f"{convert(board['B1'])} | {convert(board['B2'])} | {convert(board['B3'])} ")
+    print("--+---+--")
+    print(
+        f"{convert(board['B4'])} | {convert(board['B5'])} | {convert(board['B6'])} ")
+    print("--+---+--")
+    print(
+        f"{convert(board['B7'])} | {convert(board['B8'])} | {convert(board['B9'])} ")
+
+
+def make2():
+    if board['B5'] == 2:
+        return 'B5'
+    elif board['B2'] == 2:
+        return 'B2'
+    elif board['B4'] == 2:
+        return 'B4'
+    elif board['B6'] == 2:
+        return 'B6'
+    elif board['B8'] == 2:
+        return 'B8'
+
+
+def anywhereblank():
+    for i in range(1, 10):
+        if(board[f"B{i}"] == 2):
+            return f"B{i}"
+
+
+def whichpos(a, b, c):
+    if board[a] == 2:
+        return a
+    elif board[b] == 2:
+        return b
+    else:
+        return c
+
+
+def posswin(p):
+    if p == 'P1':
+        value = 18
+
+    elif p == 'P2':
+        value = 50
+
+    if(board['B1'] * board['B2'] * board['B3'] == value):
+        return whichpos('B1', 'B2', 'B3')
+
+    elif(board['B4'] * board['B5'] * board['B6'] == value):
+        return whichpos('B4', 'B5', 'B6')
+
+    elif(board['B7'] * board['B8'] * board['B9'] == value):
+        return whichpos('B7', 'B8', 'B9')
+
+    elif(board['B1'] * board['B4'] * board['B7'] == value):
+        return whichpos('B1', 'B4', 'B7')
+
+    elif(board['B2'] * board['B5'] * board['B8'] == value):
+        return whichpos('B2', 'B5', 'B8')
+
+    elif(board['B3'] * board['B6'] * board['B9'] == value):
+        return whichpos('B3', 'B6', 'B9')
+
+    elif(board['B1'] * board['B5'] * board['B9'] == value):
+        return whichpos('B1', 'B5', 'B9')
+
+    elif(board['B3'] * board['B5'] * board['B7'] == value):
+        return whichpos('B3', 'B5', 'B7')
+    else:
+        return 0
+
+
+def checkwin(value):
+    if(board['B1'] * board['B2'] * board['B3'] == value):
+        print("You loose")
+        exit()
+
+    elif(board['B4'] * board['B5'] * board['B6'] == value):
+        print("You loose")
+        exit()
+
+    elif(board['B7'] * board['B8'] * board['B9'] == value):
+        print("You loose")
+        exit()
+
+    elif(board['B1'] * board['B4'] * board['B7'] == value):
+        print("You loose")
+        exit()
+
+    elif(board['B2'] * board['B5'] * board['B8'] == value):
+        print("You loose")
+        exit()
+
+    elif(board['B3'] * board['B6'] * board['B9'] == value):
+        print("You loose")
+        exit()
+
+    elif(board['B1'] * board['B5'] * board['B9'] == value):
+        print("You loose")
+        exit()
+
+    elif(board['B3'] * board['B5'] * board['B7'] == value):
+        print("You loose")
+        exit()
+
+
+def go(position):
+    if player == 'P1':
+        board[position] = 5
+    else:
+        board[position] = 3
+
+
+def playai():
+    if player == 'P1':
+        if turn == 2:
+            if board['B5'] == 2:
+                go('B5')
+            else:
+                go('B1')
+
+        elif turn == 4:
+            if posswin('P1') != 0:
+                go(posswin('P1'))
+            else:
+                go(make2())
+
+        elif turn == 6:
+            if posswin('P2') != 0:
+                go(posswin('P2'))
+            elif posswin('P1') != 0:
+                go(posswin('P1'))
+            else:
+                go(make2)
+
+        elif turn == 8:
+            if posswin('P2') != 0:
+                go(posswin('P2'))
+            elif posswin('P1') != 0:
+                go(posswin('P1'))
+            else:
+                go(anywhereblank())
+
+    else:
+        if turn == 1:
+            go('B1')
+        elif turn == 3:
+            if board['B9'] == 2:
+                go('B9')
+            else:
+                go('B3')
+        elif turn == 5:
+            if(posswin('P1')) != 0:
+                go(posswin('P1'))
+            elif posswin('P2') != 0:
+                go(posswin('P2'))
+            else:
+                if(board['B7'] == 2):
+                    go('B7')
+                else:
+                    go('B3')
+        elif turn == 7 or turn == 9:
+            if(posswin('P1')) != 0:
+                go(posswin('P1'))
+            elif posswin('P2') != 0:
+                go(posswin('P2'))
+            else:
+                go(anywhereblank())
+
+    display()
+
+
+print("\nPosition Names...")
+print("B1 | B2 | B3")
+print("---+----+---")
+print("B4 | B5 | B6")
+print("---+----+---")
+print("B7 | B8 | B9\n")
+
+while turn < 10:
+
+    if player == 'P1':
+        if(turn % 2 != 0):
+            pos = input("Enter position : ").upper()
+            if board[pos] == 2:
+
+                board[pos] = 3
+                turn += 1
+
+            else:
+                print("Invalid move...Play again!")
+
+        else:
+            playai()
+            checkwin(125)
+            turn += 1
+
+    else:
+        if(turn % 2 != 0):
+            playai()
+            checkwin(27)
+            turn += 1
+
+        else:
+            pos = input("Enter position : ").upper()
+            if board[pos] == 2:
+                board[pos] = 5
+                turn += 1
+
+            else:
+                print("Invalid move...Play again!")
+
+display()
+print("Tie")
