@@ -158,7 +158,7 @@ def playai():
             elif posswin('P1') != 0:
                 go(posswin('P1'))
             else:
-                go(make2)
+                go(make2())
 
         elif turn == 8:
             if posswin('P2') != 0:
